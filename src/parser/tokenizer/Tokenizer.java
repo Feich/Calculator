@@ -93,7 +93,7 @@ public class Tokenizer {
             sb.append(s.charAt(i++));
         }
         try {
-            num = Converter.convert(sb.toString());
+            num = Converter.convertToInt(sb.toString());
         } catch (IllegalArgumentException e) {
             throw new TokenException("Value should be correct Rome number less than 10", e);
         }

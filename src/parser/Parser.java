@@ -14,7 +14,7 @@ public class Parser {
 
     private Tokenizer tokenizer;
 
-    public Expression parse(String s) throws TokenException, MyParseException {
+    public Solution parse(String s) throws TokenException, MyParseException {
         tokenizer = new Tokenizer(s);
         tokenizer.next();
         return parseExpression();
@@ -71,14 +71,14 @@ public class Parser {
         return expr;
     }
 
-    private Expression parseExpression() throws TokenException, MyParseException {
-        Expression expr;
+    private Solution parseExpression() throws TokenException, MyParseException {
+        Solution solution;
         switch (tokenizer.getToken()) {
             case NUM:
-                expr = parseOperation(parseNum(), false);
+                solution = new Solution(false, parseOperation(parseNum(), false));
                 break;
             case ROME:
-                expr = parseOperation(parseRome(), true);
+                solution = new Solution(true, parseOperation(parseRome(), true));
                 break;
             default:
                 throw new MyParseException(String.format("Unexpected token %s while parsing expression ", tokenizer.getToken().toString()));
@@ -86,6 +86,6 @@ public class Parser {
         if (tokenizer.getToken() != Tokens.EOI) {
             throw new MyParseException("expression.Expression should consist of one operation");
         }
-        return expr;
+        return solution;
     }
 }
